@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/w3.css">
+    <link rel="stylesheet" href="assets/css/w3-theme-black.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        * {
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+        overflow: hidden;
+        background-color: #333;
+        }
+
+        .topnav a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        }
+
+        .topnav a:hover {
+        background-color: #ddd;
+        color: black;
+        }
+        
+        .footer {
+        background-color: #2f2f2f;
+        padding: 10px;
+        }
+
+
+        canvas {
+            
+            border: 1px inset rgb(46, 46, 46);
+            -webkit-transition: all 1s;
+            }
+
+    </style>
+    
+    <title>Mel Spectrum Analyzer</title>
+
+    
+  </head>
+
+<body class="w3-black">
+    
+    
+    <div class="topnav">
+        <a href="#">Analyzer</a>
+        <a href="#">Info</a>
+    </div>
+    <div class="w3-container w3-center">
+        <h3>Mel Spectrum Analyzer </h3>
+    </div>
+
+
+    <div class="w3-container">
+        <div class="w3-row w3-center w3-padding-16">
+            <canvas id="SpectrumCanvas" width="1024" height="400" ></canvas>
+        </div>
+
+        <div class="w3-row w3-center">
+            <p id="msg">Press Soprano</p>
+            
+        </div>
+
+        
+
+
+        <!-- The Modal -->
+        <div id="id01" class="w3-modal w3-animate-opacity">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+                <header class="w3-container w3-theme-d1"> 
+                 <span onclick="document.getElementById('id01').style.display='none'" 
+                 class="w3-button w3-red w3-xlarge w3-display-topright">&times;</span>
+                 <h2>Settings</h2>
+                </header>
+              
+              
+                <div class="w3-container w3-theme-d2">
+
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Spectrum:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Type</label>
+                        <select class="w3-select w3-dark-input" id="spec_type" style="width:90%">
+                            <option value="1" selected>Mel-bands</option>
+                            <option value="2">Power</option>
+                            <option value="3">DFFT</option>
+                          </select> 
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Plot type</label>
+                        <select class="w3-select w3-dark-input" id="plot_type" style="width:90%">
+                            <option value="1" selected>Spectrum</option>
+                            <option value="2">Bars</option>
+                          </select> 
+                        </div>
+                    </div>
+
+                    
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Plot settings:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Length (frames n)</label>
+                            <input class="w3-input w3-dark-input" type="number" id="plot_len" placeholder="60" style="width:90%" title="Number of frames to plot on the spectrum canvas.">
+                        </div>
+                        <div class="w3-col m3">
+                        <label></label>
+                        <select class="w3-select w3-dark-input" name="color_scheme" id="color_scheme"  style="width:90%" hidden>
+                            <option value="1" selected>Fire</option>
+                            <option value="2">Classify</option>
+                          </select> 
+                        </div>
+                    </div>
+
+                    
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Scale:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                            <input class="w3-check" id="amplitude_log" title="Enable amplitude conversion to dB. It compresses the difference between very high and very low amplitudes." type="checkbox" checked>
+                            <label for="amplitude_log" >Amplitude Log Scale</label>
+                        </div>
+                        <div class="w3-col m3">
+                            <input class="w3-check" id="freq_log" type="checkbox" hidden>
+                            <label for="freq_log"></label>
+                        </div>
+                    </div>
+
+                </div>
+              
+                <div class="w3-container w3-theme-d3">
+                    
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Frequency range:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                        <label>F min (Hz)</label>
+                        <input class="w3-input w3-dark-input" type="number" id="f_min" placeholder="50" style="width:90%" title="Minimum frequency of Mel filter.">
+                        </div>
+                        <div class="w3-col m3">
+                        <label>F max (Hz)</label>
+                        <input class="w3-input w3-dark-input" type="number" id="f_max" placeholder="4000" style="width:90%" title="Maximum frequency of FFT, power spectrum amd Mel-filters.">
+                        </div>
+                    </div>
+
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Bins:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                        <label>FFT bins</label>
+                        <input class="w3-input w3-dark-input" type="number" id="N_fft_bins" placeholder="128" style="width:90%" title="Number of FFT bins within 0Hz to F_max range. This is not the FFT size, because FFT size depends on the sampling rate of the browser (usually 48kHz). This variable only sets the number of bins within the 0Hz-F_max frequency range. F_min is ignored for FFT bins.">
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Mel filters</label>
+                        <input class="w3-input w3-dark-input" type="number" id="N_mel_bins" placeholder="64" style="width:90%" title="Number of Mel filter (bin). Keep it less or equal to FFT bins. F_min is the starting range for first Mel-filter, F_max is the end frequency of the last mel filter.">
+                        </div>
+                    </div>
+
+                    
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Sample Window:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Width (ms)</label>
+                        <input class="w3-input w3-dark-input" type="number" id="window_width" placeholder="40" style="width:90%" title="Window size for sampling in milliseconds">
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Step (ms)</label>
+                        <input class="w3-input w3-dark-input" type="number" id="window_step" placeholder="25" style="width:90%" title="Step size for sampling window in milliseconds. Keep it half the size of window to create 50% overlapping windows.">
+                        </div>
+                    </div>
+                 
+                </div>
+              
+                <div class="w3-container w3-theme-d4">
+
+                    
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Normalization:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                            <label>Normal Max</label>
+                            <input class="w3-input w3-dark-input" type="number" id="norm_max" placeholder="100000" style="width:90%" title="Max value after normalization. Default is 100000 because 1000 to 100000 is the audible amplitude in this range.">
+                        </div>
+                        <div class="w3-col m3">
+                            <label>Maxima history</label>
+                            <input class="w3-input w3-dark-input" type="number" id="local_norm_length" placeholder="20" style="width:90%" title="Number of previous frames to consider to extract local amplitude maximum in order to normalize relative to previous frames.">
+                        </div>
+                    </div>
+
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Gain Threshold:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Gain</label>
+                            <input class="w3-input w3-dark-input" type="number" id="pre_norm_gain" placeholder="1000" style="width:90%" title="Gain multiplier for FFT bins to avoid loosing floating point precision and the color brightness of spectrum.">
+                        </div>
+                        <div class="w3-col m3">
+                            <label>Silence ceiling</label>
+                            <input class="w3-input w3-dark-input" type="number" id="pre_norm_silence_ceil" placeholder="1000" style="width:90%" title="Maximum amplitude of silence. Default is the same as the gain*1.">
+                        </div>
+                    </div>
+                
+                    <div class="w3-row w3-padding-16">
+                        <div class="w3-col m3">
+                            <h4>Other:</h4>
+                        </div>
+                        <div class="w3-col m3">
+                        <label>High-freq-emphasis</label>
+                        <input class="w3-input w3-dark-input" type="number" id="high_f_emph" placeholder="10" style="width:90%" title="Emphasis multiplier constant for higher frequencies. High frequencies have low amplitude, multiply their amplitude by this number to be able to view on the spectrum.">
+                        </div>
+                        <div class="w3-col m3">
+                        <label>Sample skip rate</label>
+                        <input class="w3-input w3-dark-input" type="number" id="skip_rate" placeholder="-1" style="width:90%" title="Set -1 for auto. Number of samples to skip after processing 1 sample. Increase it to decrease the processing load.">
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="w3-container  w3-theme-d1 w3-padding">
+                 <button class="w3-button w3-right w3-blue-grey w3-border" 
+                 onclick="update_settings()">Set</button>
+                </div>
+                
+            </div>
+          </div> 
+
+        <div class="w3-row w3-center w3-padding-small">
+                <input type="button" id="start_button" value="Soprano" class="w3-button w3-wide w3-border w3-border-amber w3-padding">
+                <input type="button" id="stop_button" value="Stop" class="w3-button w3-wide w3-border w3-border-amber w3-padding">
+                <input type="button" id="mic_button" value="Mic" class="w3-button w3-wide w3-border w3-border-amber w3-padding">
+                <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-small w3-border w3-border-brown">Settings</button>
+        </div>
+        
+        <div class="w3-row w3-center w3-padding-small">
+            <div id="dropZone" class="w3-card-4">
+                <p>
+                    <input type="file" id="filesx" name="filesx[]" onchange="readmultifiles(this.files)" multiple="" class="w3-button w3-border w3-hover-border-khaki w3-padding" />
+                </p>
+            </div>
+            
+        </div>
+    </div>
+        
+    </div> 
+    
+
+
+
+      
+    <div id="bag">
+        <ul>
+        </ul>
+    </div>
+    <script src="assets/js/script.js"></script>
+    </body>
+</html>

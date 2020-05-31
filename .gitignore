@@ -1,0 +1,11 @@
+Archive/
+cache/
+**/__pycache__/
+notes.txt
+*.csv
+server.bat
+.vscode
+**/*.main.js
+*.code-workspace
+
+
