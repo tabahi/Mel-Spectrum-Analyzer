@@ -4,7 +4,7 @@ Online web based Mel-spectrum, power spectrum, FFT analyzer for speech and music
 
 [See the demo here: tabahi.github.io/Mel-Spectrum-Analyzer](https://tabahi.github.io/Mel-Spectrum-Analyzer/)
 
-Tested and works on Firefox (v76) and Chrome (v83).
+Compatibility: Tested and works on Firefox Desktop (v76), Chrome Desktop (v83) and Chrome Android (v81).
 
 
 
