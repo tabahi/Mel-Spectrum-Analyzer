@@ -2,6 +2,8 @@
 
 Online web based Mel-spectrum, power spectrum, FFT analyzer for speech and music processing.
 
+[See the demo here: tabahi.github.io/Mel-Spectrum-Analyzer](https://tabahi.github.io/Mel-Spectrum-Analyzer/)
+
 Tested and works on Firefox (v76) and Chrome (v83).
 
 
