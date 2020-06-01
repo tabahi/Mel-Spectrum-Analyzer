@@ -13,6 +13,6 @@ Compatibility: Tested and works on Firefox Desktop (v76), Chrome Desktop (v83) a
 
 No external JS dependencies.
 
-The music file is from [youtube - agabo92](www.youtube.com/watch?v=kznhSUTR0JA) (CC License). It is a good example for observing notes transition.
+The music file is from [youtube - agabo92](https://www.youtube.com/watch?v=kznhSUTR0JA) (CC License). It is a good example for observing notes transition.
 
 cc-by-4.0
