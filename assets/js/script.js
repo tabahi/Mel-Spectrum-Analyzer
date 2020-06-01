@@ -21,6 +21,7 @@ let audioData = null;
 let audioPlaying = false;
 
 let audioUrl = "Haendel_Lascia_chi_o_pianga.mp4";   //url https://www.youtube.com/watch?v=kznhSUTR0JA
+let current_playing = "Haendel's Lascia ch'io pianga, soprano Tullia Pedersoli - LIVE";
 // This must be hosted on the same server as this page, otherwise Cross Site Scripting error
 
 var SPEC_BOX_WIDTH = 1024
@@ -44,10 +45,10 @@ document.querySelector('#mic_button').addEventListener('click', function()
     
 });
 
-document.querySelector('#start_button').addEventListener('click', function(e)
+document.querySelector('#soprano_button').addEventListener('click', function(e)
 {
     if(audioPlaying) stop_playing();
-    
+    current_playing = "Haendel's Lascia ch'io pianga, soprano Tullia Pedersoli - LIVE";
     if(SourceMode==0) online_play();
     else if(SourceMode==1) offline_play();
     e.preventDefault();
@@ -115,7 +116,7 @@ function online_play()
         {
             workletNode.port.postMessage(22);   //send 22 to end the process
             audioPlaying = false;
-            sourceNode.stop(0);
+            try{ sourceNode.stop(0); } catch(e){}
             try{ workletNode.disconnect(audioContext.destination); } catch(e){}
             try{ sourceNode.disconnect(workletNode); } catch(e){}
             try{ sourceNode.disconnect(audioContext.destination); } catch(e){}
@@ -126,7 +127,7 @@ function online_play()
 
         loadSound.then(function() {
             
-            document.getElementById('msg').textContent = "Playing Haendel's Lascia ch'io pianga, soprano Tullia Pedersoli - LIVE";
+            document.getElementById('msg').textContent = "Playing " + current_playing;
             sourceNode.buffer = audioData;
             sourceNode.connect(audioContext.destination);
             sourceNode.connect(workletNode);
@@ -174,7 +175,7 @@ function dnd_play(dnd_file)
             workletNode.port.postMessage(22);   //send 22 to end the process
             audioPlaying = false;
 
-            sourceNode.stop(0);
+            try{ sourceNode.stop(0); } catch(e){}
             try{ workletNode.disconnect(audioContext.destination); } catch(e){}
             try{ sourceNode.disconnect(workletNode); } catch(e){}
             try{ sourceNode.disconnect(DnDaudioContext.destination); } catch(e){}
@@ -193,7 +194,7 @@ function dnd_play(dnd_file)
                 DnDaudioContext.decodeAudioData(dnd_file, function (buffer)
                 {
                     audioData = buffer;
-                    document.getElementById('msg').textContent = "Playing";
+                    document.getElementById('msg').textContent = "Playing " + current_playing;
                     sourceNode.buffer = audioData;
                     sourceNode.connect(DnDaudioContext.destination);
                     sourceNode.connect(workletNode);
@@ -676,7 +677,7 @@ function readmultifiles(files)
     {
       if( index >= files.length )
       {           
-        document.getElementById("filesx").value = "";
+        //document.getElementById("filesx").value = "";
         return;
       }
     
@@ -693,10 +694,12 @@ function readmultifiles(files)
             //ul.appendChild(li);
             var bin = e.target.result;
             // do sth with bin
+            if (audioPlaying) stop_playing();
+            current_playing = name;
             dnd_play(bin);
         }
         
-        readFile(index+1)
+        //readFile(index+1)
       }
       reader.readAsArrayBuffer(file);
     }

@@ -38,8 +38,12 @@
         }
         
         .footer {
-        background-color: #2f2f2f;
+        background-color: #000000;
         padding: 10px;
+        text-align: center;
+        padding: 14px 16px;
+        font-size: 10px;
+        color: rgb(167, 167, 167);
         }
 
 
@@ -60,7 +64,6 @@
     
     
     <div class="topnav">
-        <a href="#">Analyzer</a>
         <a href="https://github.com/tabahi/Mel-Spectrum-Analyzer">Info</a>
     </div>
     <div class="w3-container w3-center">
@@ -251,7 +254,7 @@
           </div> 
 
         <div class="w3-row w3-center w3-padding-small">
-                <input type="button" id="start_button" value="Soprano" class="w3-button w3-wide w3-border w3-border-amber w3-padding">
+                <input type="button" id="soprano_button" value="Soprano" class="w3-button w3-wide w3-border w3-border-amber w3-padding">
                 <input type="button" id="stop_button" value="Stop" class="w3-button w3-wide w3-border w3-border-amber w3-padding">
                 <input type="button" id="mic_button" value="Mic" class="w3-button w3-wide w3-border w3-border-amber w3-padding">
                 <button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-small w3-border w3-border-brown">Settings</button>
@@ -277,6 +280,17 @@
         <ul>
         </ul>
     </div>
+
+    <div class="footer">
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+            <span>
+                <b>Tabahi - Abdul Rehman</b>
+            </span>
+            
+            <span>© 2020</span>
+          </a>
+    </div>
+
     <script src="assets/js/script.js"></script>
     </body>
 </html>

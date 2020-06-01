@@ -15,3 +15,4 @@ No external JS dependencies.
 
 The music file is from [youtube - agabo92](www.youtube.com/watch?v=kznhSUTR0JA) (CC License). It is a good example for observing notes transition.
 
+cc-by-4.0
