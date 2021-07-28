@@ -1,5 +1,5 @@
 # Mel-Spectrum-Analyzer
-Note: Check out a newer and better fork:  [tabahi.github.io/WebSpeechAnalyzer](https://tabahi.github.io/WebSpeechAnalyzer/?mode=2&p=Haendel_Lascia_chi_o_pianga.mp4)
+Note: Check out a newer and better fork:  [tabahi.github.io/WebSpeechAnalyzer](https://tabahi.github.io/WebSpeechAnalyzer/?mode=2&p=samples/Haendel_Lascia_chi_o_pianga.mp4)
 
 Online web based Mel-spectrum, power spectrum, FFT analyzer for speech and music processing.
 
