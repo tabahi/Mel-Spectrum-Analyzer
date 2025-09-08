@@ -1,9 +1,13 @@
 # Mel-Spectrum-Analyzer
+
+View the analyzer here:
+## [tabahi.github.io/Mel-Spectrum-Analyzer](https://tabahi.github.io/Mel-Spectrum-Analyzer/)
+Press Soprano for demo
+
 Note: Check out a newer and better fork:  [tabahi.github.io/WebSpeechAnalyzer](https://tabahi.github.io/WebSpeechAnalyzer/?mode=2&p=samples/Haendel_Lascia_chi_o_pianga.mp4)
 
 Online web based Mel-spectrum, power spectrum, FFT analyzer for speech and music processing.
 
-See the demo here: [tabahi.github.io/Mel-Spectrum-Analyzer](https://tabahi.github.io/Mel-Spectrum-Analyzer/)
 
 Compatibility: Works on Firefox Desktop (v76), Chrome Desktop (v83) and Chrome Android (v81).
 
